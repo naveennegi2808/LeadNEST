@@ -19,7 +19,7 @@ export default function WhatsAppPage() {
         if (running) {
             interval = setInterval(async () => {
                 try {
-                    const res = await axios.get('http://localhost:8000/api/whatsapp/status');
+                    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/whatsapp/status`);
                     setLogs(res.data.logs || []);
                     if (res.data.status === 'idle' && res.data.logs.some(l => l.includes('Complete') || l.includes('❌'))) {
                         setRunning(false);
@@ -40,7 +40,7 @@ export default function WhatsAppPage() {
         try {
             setRunning(true);
             setLogs(['Initializing WhatsApp Web Playwright Session...']);
-            await axios.post('http://localhost:8000/api/whatsapp/start', config);
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/whatsapp/start`, config);
         } catch (e) {
             alert("Failed to start WhatsApp automation. " + (e.response?.data?.detail || ""));
             setRunning(false);

@@ -23,7 +23,7 @@ export default function ScrapePage() {
         if (running) {
             interval = setInterval(async () => {
                 try {
-                    const res = await axios.get('http://localhost:8000/api/scrape/status');
+                    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/scrape/status`);
                     setLogs(res.data.logs || []);
                     if (res.data.status === 'idle' && res.data.logs.some(l => l.includes('Done!'))) {
                         setRunning(false);
@@ -43,7 +43,7 @@ export default function ScrapePage() {
     useEffect(() => {
         const fetchLeadCount = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/api/auth/status/leads');
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/status/leads`);
                 setLeadCount(res.data.count);
             } catch (e) {
                 // Ignore silent fail
@@ -57,7 +57,7 @@ export default function ScrapePage() {
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/api/scrape/status');
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/scrape/status`);
                 if (res.data.status === 'running') {
                     setRunning(true);
                     setLogs(res.data.logs || []);
@@ -73,7 +73,7 @@ export default function ScrapePage() {
         try {
             setRunning(true);
             setLogs(['Starting scraper service...']);
-            await axios.post('http://localhost:8000/api/scrape/start', config);
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/scrape/start`, config);
         } catch (e) {
             alert("Failed to start scraper. Check backend is running.");
             setRunning(false);
@@ -82,7 +82,7 @@ export default function ScrapePage() {
 
     const handleStop = async () => {
         try {
-            await axios.post('http://localhost:8000/api/scrape/stop');
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/scrape/stop`);
             setRunning(false);
             setLogs(prev => [...prev, '🛑 Scraping manually stopped by user.']);
         } catch (e) {

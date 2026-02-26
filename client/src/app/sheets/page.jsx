@@ -20,7 +20,7 @@ export default function SheetsPage() {
         // Fetch actual backend status on mount to persist connection state across reloads
         const checkStatus = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/api/auth/status');
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/status`);
                 if (res.data.authenticated) {
                     setConnected(true);
                 }
@@ -34,7 +34,7 @@ export default function SheetsPage() {
     const handleConnect = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:8000/api/auth/url');
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/auth/url`);
             if (res.data.url) {
                 window.location.href = res.data.url;
             }
