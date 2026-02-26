@@ -1,0 +1,11 @@
+node_modules/
+.next/
+__pycache__/
+.venv/
+env/
+.env
+temp_src/
+server/client_secret.json
+server/token.json
+.DS_Store
+server/whatsapp_session_api/
