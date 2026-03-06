@@ -60,7 +60,7 @@ To allow the app to create and write to your *own* Google Sheet, you need to cre
    ```
 5. Run the server:
    ```bash
-   uvicorn main:app --reload --port 8000
+   uvicorn app.main:app --reload --port 8000
    ```
    *The backend is now running at http://localhost:8000*
 
