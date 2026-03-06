@@ -27,9 +27,13 @@ import urllib.parse
 def auth_callback(code: str, state: str = None, scope: str = None):
     try:
         success = sheets_service.handle_callback(code)
+        import os
+        frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
         # Redirect back to the frontend sheets page on success
-        return RedirectResponse(url="http://localhost:3001/sheets?status=success")
+        return RedirectResponse(url=f"{frontend_url}/sheets?status=success")
     except Exception as e:
         error_msg = urllib.parse.quote(str(e))
-        return RedirectResponse(url=f"http://localhost:3001/sheets?status=error&message={error_msg}")
+        import os
+        frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
+        return RedirectResponse(url=f"{frontend_url}/sheets?status=error&message={error_msg}")
 
